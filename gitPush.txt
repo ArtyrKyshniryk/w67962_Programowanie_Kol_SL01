@@ -1,0 +1,1 @@
+Wciśnij określoną gałąź do , wraz ze wszystkimi niezbędnymi zatwierdzeniami i obiektami wewnętrznymi. Spowoduje to utworzenie lokalnego oddziału w repozytorium docelowym. Aby uniemożliwić nadpisanie zatwierdzeń, Git nie pozwoli ci naciskać, gdy spowoduje to scalenie bez szybkiego przewijania do przodu w docelowym repozytorium.

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .light {
+      width: 100px;
+      height: 100px;
+      margin: 10px auto;
+      border-radius: 50%;
+      border: 1PX solid black;
+    }
+
+    .red {
+      background-color: red;
+    }
+
+    .yellow {
+      background-color: yellow;
+    }
+
+    .green {
+      background-color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="light red" id="colorRed"></div>
+  <div class="light yellow" id="colorYellow"></div>
+  <div class="light green" id="colorGreen"></div>
+
+  <script>
+    function changeColor(color) {
+      const lights = document.getElementsByClassName('light');
+
+      for (let i = 0; i < lights.length; i++) {
+        lights[i].style.backgroundColor = 'initial';
+      }
+
+      document.getElementById('color' + color.charAt(0).toUpperCase() + color.slice(1)).style.backgroundColor = color;
+    }
+
+    const colors = ['red', 'yellow', 'green'];
+    let currentIndex = 0;
+
+    function changeLightColor() {
+      changeColor(colors[currentIndex]);
+      currentIndex = (currentIndex + 1) % colors.length;
+    }
+
+    setInterval(changeLightColor, 1000);
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+

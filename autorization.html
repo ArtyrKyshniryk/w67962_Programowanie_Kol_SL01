@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .error {
+      color: red;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <form id="registrationForm" onsubmit="validateForm(event)">
+    <div>
+      <label for="login">Login:</label>
+      <input type="text" id="login" name="login" minlength="3" required>
+      <span id="loginError" class="error"></span>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <span id="emailError" class="error"></span>
+    </div>
+    <div>
+      <label for="password">Hasło:</label>
+      <input type="password" id="password" name="password" required>
+      <span id="passwordError" class="error"></span>
+    </div>
+    <div>
+      <label for="confirmPassword">Powtórz hasło:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required>
+      <span id="confirmPasswordError" class="error"></span>
+    </div>
+    <div>
+      <input type="checkbox" id="phoneCheckbox" name="phoneCheckbox" onchange="togglePhoneField()">
+      <label for="phoneCheckbox">Czy chcesz dodać numer telefonu?</label>
+    </div>
+    <div id="phoneField" style="display: none;">
+      <label for="phone">Telefon:</label>
+      <input type="tel" id="phone" name="phone" pattern="[0-9]{9}" placeholder="Wprowadź numer telefonu">
+      <span id="phoneError" class="error"></span>
+    </div>
+    <div>
+      <label for="birthdate">Data urodzenia:</label>
+      <input type="date" id="birthdate" name="birthdate" required>
+      <span id="birthdateError" class="error"></span>
+    </div>
+    <div>
+      <button type="submit">Zarejestruj</button>
+    </div>
+  </form>
+
+  <script>
+    function validateForm(event) {
+      event.preventDefault();
+
+      const loginInput = document.getElementById('login');
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const confirmPasswordInput = document.getElementById('confirmPassword');
+      const phoneCheckbox = document.getElementById('phoneCheckbox');
+      const phoneInput = document.getElementById('phone');
+      const birthdateInput = document.getElementById('birthdate');
+      const loginError = document.getElementById('loginError');
+      const emailError = document.getElementById('emailError');
+      const passwordError = document.getElementById('passwordError');
+      const confirmPasswordError = document.getElementById('confirmPasswordError');
+      const phoneError = document.getElementById('phoneError');
+      const birthdateError = document.getElementById('birthdateError');
+
+      if (loginInput.value.length < 3) {
+        loginError.textContent = 'Login musi zawierać minimum 3 znaki.';
+      } else {
+        loginError.textContent = '';
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailInput.value)) {
+        emailError.textContent = 'Wprowadź poprawny adres email.';
+      } else {
+        emailError.textContent = '';
+      }
+
+      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+      if (!passwordRegex.test(passwordInput.value)) {
+        passwordError.textContent = 'Hasło musi mieć co najmniej 8 znaków, zawierać co najmniej jedną literę i jedną cyfrę.';
+      } else {
+        passwordError.textContent = '';
+      }
+
+      if (passwordInput.value !== confirmPasswordInput.value) {
+        confirmPasswordError.textContent = 'Hasło nie pasuje.';
+      } else {
+        confirmPasswordError.textContent = '';
+      }
+
+      if (phoneCheckbox.checked) {
+        const phoneRegex = /^[0-9]{9}$/;
+        if (!phoneRegex.test(phoneInput.value)) {
+          phoneError.textContent = 'Wprowadź poprawny numer telefonu składający się z 9 cyfr.';
+        } else {
+          phoneError.textContent = '';
+        }
+      } else {
+        phoneError.textContent = '';
+      }
+
+      const currentDate = new Date();
+      const selectedDate = new Date(birthdateInput.value);
+      const ageDifference = currentDate.getFullYear() - selectedDate.getFullYear();
+      if (ageDifference < 18) {
+        birthdateError.textContent = 'Musisz mieć ukończone 18 lat.';
+      } else {
+        birthdateError.textContent = '';
+      }
+
+      if (
+        loginError.textContent === '' &&
+        emailError.textContent === '' &&
+        passwordError.textContent === '' &&
+        confirmPasswordError.textContent === '' &&
+        phoneError.textContent === '' &&
+        birthdateError.textContent === ''
+      ) {
+        console.log('Formularz jest poprawny!');
+      }
+    }
+
+    function togglePhoneField() {
+      const phoneField = document.getElementById('phoneField');
+      const phoneCheckbox = document.getElementById('phoneCheckbox');
+      phoneField.style.display = phoneCheckbox.checked ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
